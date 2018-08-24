@@ -1,13 +1,17 @@
 package flutur.org.customsoftkeyboard;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
+
+import org.w3c.dom.Attr;
 
 /**
  * Created by Mallika Priya Khullar on 25/08/18.
@@ -19,11 +23,13 @@ public class CustomSoftKeyboard extends View implements View.OnClickListener{
     private static final int TYPE_NUMERIC = 3;
 
     private Typeface mTypeface;
-    private int mKeyTypes;
+    private int mKeyType;
     private int mKeyTextSize;
     private int mKeyTextColor;
     private int mBackgroundColor;
     private TextPaint mTextPaint;
+
+    Context mContext;
 
     private OnKeyboardActionListener mKeyboardActionListener;
 
@@ -72,26 +78,28 @@ public class CustomSoftKeyboard extends View implements View.OnClickListener{
 
     public CustomSoftKeyboard(Context context) {
         super(context);
+        mContext = context;
     }
 
     public CustomSoftKeyboard(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        mContext = context;
     }
 
     public CustomSoftKeyboard(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        mContext = context;
     }
 
     public CustomSoftKeyboard(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        mContext = context;
+        initView(attrs);
+    }
 
-        float density = getResources().getDisplayMetrics().density;
-
-        // Defaults, may need to link this into theme settings
-
+    void initView(@Nullable AttributeSet attrs){
         if (attrs != null) {
-            // Attribute initialization
-            final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CustomSoftKeyboard, 0, 0);
+            final TypedArray a = mContext.obtainStyledAttributes(attrs, R.styleable.CustomSoftKeyboard, 0, 0);
 
             mBackgroundColor = a.getColor(R.styleable.CustomSoftKeyboard_backgroundColor, 0xFF000000);
             mKeyTextColor = a.getColor(R.styleable.CustomSoftKeyboard_textColor, 0xFFffffff);
@@ -102,17 +110,39 @@ public class CustomSoftKeyboard extends View implements View.OnClickListener{
             isNumeric = a.getBoolean(R.styleable.CustomSoftKeyboard_numVisible, false);
             isAlphanumeric = isAlpha && isNumeric;
 
-            mKeyTypes = isAlphanumeric?TYPE_ALPHANUMERIC: isAlpha?TYPE_ALPHA:TYPE_NUMERIC;
+            mKeyType = isAlphanumeric?TYPE_ALPHANUMERIC: isAlpha?TYPE_ALPHA:TYPE_NUMERIC;
+
+            mTextPaint = new TextPaint();
+            mTextPaint.setColor(mKeyTextColor);
+            mTextPaint.setAntiAlias(true);
+            mTextPaint.setStyle(Paint.Style.FILL);
+            mTextPaint.setTextSize(mKeyTextSize);
+
             a.recycle();
         }
-
-        mTextPaint = new TextPaint();
-        mTextPaint.setColor(mKeyTextColor);
-        mTextPaint.setAntiAlias(true);
-        mTextPaint.setStyle(Paint.Style.FILL);
-        mTextPaint.setTextSize(mKeyTextSize);
     }
 
+    public CustomSoftKeyboard setAlpha() {
+        mKeyType = mKeyType == TYPE_NUMERIC? TYPE_ALPHANUMERIC:TYPE_ALPHA;
+        return this;
+    }
+    public CustomSoftKeyboard setNumeric() {
+        mKeyType = mKeyType == TYPE_ALPHA? TYPE_ALPHANUMERIC:TYPE_NUMERIC;
+        return this;
+    }
+
+    public CustomSoftKeyboard setAlphaNumeric() {
+        mKeyType = TYPE_ALPHANUMERIC;
+        return this;
+    }
+
+    public void setTextColor(@ColorInt int color) {
+        mKeyTextColor = color;
+    }
+
+    public void setmBackgroundColor(@ColorInt int color) {
+        mBackgroundColor = color;
+    }
 
     public void setOnKeyboardActionListener(OnKeyboardActionListener listener) {
         mKeyboardActionListener = listener;
