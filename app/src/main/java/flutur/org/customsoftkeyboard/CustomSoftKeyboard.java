@@ -5,11 +5,9 @@ import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewDebug;
 
 /**
  * Created by Mallika Priya Khullar on 25/08/18.
@@ -26,6 +24,9 @@ public class CustomSoftKeyboard extends View implements View.OnClickListener{
     private int mKeyTextColor;
     private int mBackgroundColor;
     private TextPaint mTextPaint;
+
+    private OnKeyboardActionListener mKeyboardActionListener;
+
 
     /**
      * Listener for virtual keyboard events.
@@ -58,6 +59,13 @@ public class CustomSoftKeyboard extends View implements View.OnClickListener{
          * the intended key.
          */
         void onKey(int primaryCode, int[] keyCodes);
+
+        /**
+         * Send a key press to the listener.
+         * @param primaryCode this is the key that was pressed
+         */
+        void onKey(int primaryCode);
+
     }
 
 
@@ -106,8 +114,26 @@ public class CustomSoftKeyboard extends View implements View.OnClickListener{
     }
 
 
+    public void setOnKeyboardActionListener(OnKeyboardActionListener listener) {
+        mKeyboardActionListener = listener;
+    }
+
+
+    /**
+     * Returns the {@link OnKeyboardActionListener} object.
+     * @return the listener attached to this keyboard
+     */
+    protected OnKeyboardActionListener getOnKeyboardActionListener() {
+        return mKeyboardActionListener;
+    }
+
+    /**
+     * Works with the same values as the {@link android.view.KeyEvent} KeyCodes
+     * @param v
+     */
     @Override
     public void onClick(View v) {
-
+        if (mKeyboardActionListener == null) return;
+        mKeyboardActionListener.onKey((int) v.getTag());
     }
 }

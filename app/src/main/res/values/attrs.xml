@@ -11,6 +11,8 @@
         <attr name="numVisible" format="boolean" />
         <attr name="alphaVisible" format="boolean" />
 
+        <attr name="keyLabel" format="string" />
+
     </declare-styleable>
 
 </resources>

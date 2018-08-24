@@ -25,7 +25,7 @@
             android:layout_weight="1"
             android:textColor="@color/black"
             android:gravity="center"
-            android:background=""
+            
             android:onClick="buttonClicked"
             android:text="0"
             android:textAlignment="center"
@@ -42,7 +42,7 @@
             android:layout_toRightOf="@id/q"
             android:layout_weight="1"
             android:gravity="center"
-            android:background=""
+            
             android:onClick="buttonClicked"
             android:text="1"
             android:textAlignment="center"
@@ -59,7 +59,7 @@
             android:gravity="center"
             android:layout_weight="1"
             
-            android:background=""
+            
             android:onClick="buttonClicked"
             android:text="2"
             android:textAlignment="center"
@@ -78,7 +78,7 @@
             android:gravity="center"
             android:textStyle="bold"
             android:layout_weight="1"
-            android:background=""
+            
             android:onClick="buttonClicked"
             android:text="3"
             android:textAlignment="center"
@@ -97,7 +97,7 @@
             android:layout_toRightOf="@id/r"
             android:textStyle="bold"
             android:layout_weight="1"
-            android:background=""
+            
             android:onClick="buttonClicked"
             android:text="4"
             android:textAlignment="center"
@@ -114,7 +114,7 @@
             android:layout_toRightOf="@id/t"
             android:gravity="center"
             android:layout_weight="1"
-            android:background=""
+            
             android:onClick="buttonClicked"
             android:textStyle="bold"
             android:text="5"
@@ -135,7 +135,7 @@
             android:layout_marginLeft="2dp"
             android:layout_toRightOf="@id/y"
             android:layout_weight="1"
-            android:background=""
+            
             android:onClick="buttonClicked"
             android:text="6"
             android:textAlignment="center"
@@ -154,7 +154,7 @@
             android:layout_marginLeft="2dp"
             android:layout_toRightOf="@id/u"
             android:layout_weight="1"
-            android:background=""
+            
             android:onClick="buttonClicked"
             android:text="7"
             android:textAlignment="center"
@@ -173,7 +173,7 @@
             android:layout_marginLeft="2dp"
             android:layout_toRightOf="@id/i"
             android:layout_weight="1"
-            android:background=""
+            
             android:onClick="buttonClicked"
             android:text="8"
             android:textAlignment="center"
@@ -190,9 +190,7 @@
             android:textStyle="bold"
             android:layout_marginLeft="2dp"
             android:layout_toRightOf="@id/o"
-            
             android:layout_weight="1"
-            android:background=""
             android:onClick="buttonClicked"
             android:text="9"
             android:textAlignment="center"
