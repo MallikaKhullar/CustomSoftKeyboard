@@ -1,0 +1,16 @@
+<resources>
+    <declare-styleable name="CustomSoftKeyboard">
+
+        <attr name="backgroundColor" format="color" />
+
+        <attr name="textColor" format="color" />
+        <attr name="textSize" format="dimension" />
+
+        <attr name="fontType" format="reference" />
+
+        <attr name="numVisible" format="boolean" />
+        <attr name="alphaVisible" format="boolean" />
+
+    </declare-styleable>
+
+</resources>
