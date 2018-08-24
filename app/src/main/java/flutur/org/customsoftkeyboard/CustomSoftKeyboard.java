@@ -2,6 +2,7 @@ package flutur.org.customsoftkeyboard;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -10,6 +11,9 @@ import android.view.View;
  */
 public class CustomSoftKeyboard extends View implements View.OnClickListener{
 
+    private static final int TYPE_ALPHA = 1;
+    private static final int TYPE_ALPHANUMERIC = 2;
+    private static final int TYPE_NUMERIC = 3;
 
     /**
      * Listener for virtual keyboard events.
@@ -42,6 +46,54 @@ public class CustomSoftKeyboard extends View implements View.OnClickListener{
          * the intended key.
          */
         void onKey(int primaryCode, int[] keyCodes);
+    }
+
+    private void init(Context context, AttributeSet attrs) {
+
+        float density = getResources().getDisplayMetrics().density;
+
+        // Defaults, may need to link this into theme settings
+        int textColor = ContextCompat.getColor(context, R.color.colorTextDefault);
+
+        mProgressWidth = (int) (mProgressWidth * density);
+        mArcWidth = (int) (mArcWidth * density);
+        mTextSize = (int) (mTextSize * density);
+
+        mIndicatorIcon = ContextCompat.getDrawable(context, R.drawable.indicator);
+
+        if (attrs != null) {
+            // Attribute initialization
+            final TypedArray a = context.obtainStyledAttributes(attrs,
+                    R.styleable.SwagPoints, 0, 0);
+
+            Drawable indicatorIcon = a.getDrawable(R.styleable.SwagPoints_indicatorIcon);
+            if (indicatorIcon != null)
+                mIndicatorIcon = indicatorIcon;
+
+            int indicatorIconHalfWidth = mIndicatorIcon.getIntrinsicWidth() / 2;
+            int indicatorIconHalfHeight = mIndicatorIcon.getIntrinsicHeight() / 2;
+            mIndicatorIcon.setBounds(-indicatorIconHalfWidth, -indicatorIconHalfHeight, indicatorIconHalfWidth,
+                    indicatorIconHalfHeight);
+
+            mPoints = a.getInteger(R.styleable.SwagPoints_points, mPoints);
+            mMin = a.getInteger(R.styleable.SwagPoints_min, mMin);
+            mMax = a.getInteger(R.styleable.SwagPoints_max, mMax);
+            mStep = a.getInteger(R.styleable.SwagPoints_step, mStep);
+
+            mProgressWidth = (int) a.getDimension(R.styleable.SwagPoints_progressWidth, mProgressWidth);
+            progressColor = a.getColor(R.styleable.SwagPoints_progressColor, progressColor);
+
+            mArcWidth = (int) a.getDimension(R.styleable.SwagPoints_arcWidth, mArcWidth);
+            arcColor = a.getColor(R.styleable.SwagPoints_arcColor, arcColor);
+
+            mTextSize = (int) a.getDimension(R.styleable.SwagPoints_textSize, mTextSize);
+            mTextColor = a.getColor(R.styleable.SwagPoints_textColor, mTextColor);
+
+            mClockwise = a.getBoolean(R.styleable.SwagPoints_clockwise,
+                    mClockwise);
+            mEnabled = a.getBoolean(R.styleable.SwagPoints_enabled, mEnabled);
+            a.recycle();
+        }
     }
 
     public CustomSoftKeyboard(Context context) {
